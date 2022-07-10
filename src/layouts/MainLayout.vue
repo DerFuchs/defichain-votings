@@ -44,7 +44,7 @@
 
 		<q-footer reveal>
 			<q-toolbar>
-				<q-toolbar-title class="text-caption">
+				<q-toolbar-title class="text-caption q-mt-xs" style="min-height: 30px">
 					<div>
 						Powered by
 						<a href="https://dfx.swiss/app?code=001-113" target="_blank">

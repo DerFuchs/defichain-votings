@@ -6,7 +6,6 @@ import moment from "moment";
 
 export const useProposalStore = defineStore('proposals', {
 	state: () => ({
-		//latestProposals: [],
 		historicProposals: {},
 		filters: {
 			type: [
@@ -49,13 +48,11 @@ export const useProposalStore = defineStore('proposals', {
 	},
 	getters: {
 		latestProposals: (state) => {
-			//console.log(state.historicProposals)
-			//return state.historicProposals[0]
 			return Object.values(state.historicProposals).pop()
 		},
+
 		proposal: (state) => {
 			return (proposalNumber) => {
-
 				for (const [votingRound, proposals] of Object.entries(state.historicProposals)) {
 					for (const [id, proposal] of Object.entries(proposals)) {
 						if (proposal.number == proposalNumber) {
@@ -66,11 +63,13 @@ export const useProposalStore = defineStore('proposals', {
 				return false
 			}
 		},
+
 		proposalCode: () => {
 			return (proposal) => {
 				return proposal.title.substring(0, proposal.title.indexOf(':'))
 			}
 		},
+
 		proposalTitle: () => {
 			return (proposal) => {
 				let title = proposal.title
@@ -78,10 +77,10 @@ export const useProposalStore = defineStore('proposals', {
 				if (cutPrice !== -1) {
 					title = title.slice(0, cutPrice) // + str.slice(cutPrice + 1);
 				}
-
 				return title.substring(title.indexOf(":") + 1)
 			}
 		},
+
 		filteredProposals: (state) => {
 			return (filters, sort, proposals = false) => {
 				if (!proposals) {
@@ -104,11 +103,13 @@ export const useProposalStore = defineStore('proposals', {
 				return proposals
 			}
 		},
+
 		allVotings: () => {
 			return (proposal) => {
 				return proposal.voteDetails.yes.concat(proposal.voteDetails.no, proposal.voteDetails.neutral)
 			}
 		},
+
 		proposalVotingHistory: () => {
 			return (proposal) => {
 				let history = {}
@@ -158,8 +159,8 @@ export const useProposalStore = defineStore('proposals', {
 			}
 		}
 	},
-	actions: {
 
+	actions: {
 		async fetchProposals() {
 			/*
 			if (!!Object.keys(this.historicProposals).length) {

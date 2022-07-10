@@ -28,7 +28,7 @@
 						}}</span>
 					</q-card-section>
 					<q-card-actions align="right">
-						Discuss on:
+						<div>Discuss on:</div>
 						<q-btn
 							flat
 							type="a"
