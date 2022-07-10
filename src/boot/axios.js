@@ -10,11 +10,12 @@ import axios from 'axios'
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-	baseURL: 'https://api.example.com'
+	baseURL: 'https://api.dfx.swiss/v1/statistic/cfp/'
 })
 
 export default boot(({
-	app
+	app,
+	store
 }) => {
 	// for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -25,6 +26,10 @@ export default boot(({
 	app.config.globalProperties.$api = api
 	// ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
 	//       so you can easily perform requests against your app's API
+
+	store.use(() => ({
+		api
+	}));
 })
 
 export {

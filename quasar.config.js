@@ -17,7 +17,7 @@ const path = require('path');
 module.exports = configure(function ( /* ctx */ ) {
 	return {
 		eslint: {
-			// fix: true,
+			fix: true,
 			// include = [],
 			// exclude = [],
 			// rawOptions = {},
@@ -34,6 +34,8 @@ module.exports = configure(function ( /* ctx */ ) {
 		boot: [
 			'i18n',
 			'axios',
+			'fontawesome-pro',
+			'chartkick',
 		],
 
 		// https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -45,14 +47,14 @@ module.exports = configure(function ( /* ctx */ ) {
 		extras: [
 			// 'ionicons-v4',
 			// 'mdi-v5',
-			// 'fontawesome-v6',
+			'fontawesome-v6',
 			// 'eva-icons',
 			// 'themify',
 			// 'line-awesome',
 			// 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
 			'roboto-font', // optional, you are not bound to it
-			'material-icons', // optional, you are not bound to it
+			//'material-icons', // optional, you are not bound to it
 		],
 
 		// Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
@@ -74,7 +76,7 @@ module.exports = configure(function ( /* ctx */ ) {
 			// env: {},
 			// rawDefine: {}
 			// ignorePublicFolder: true,
-			// minify: false,
+			minify: true,
 			// polyfillModulePreload: true,
 			// distDir
 
@@ -95,15 +97,22 @@ module.exports = configure(function ( /* ctx */ ) {
 		// Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
 		devServer: {
 			// https: true
-			open: true // opens browser window automatically
+			open: false // opens browser window automatically
 		},
 
 		// https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
 		framework: {
-			config: {},
+			config: {
+				dark: "auto",
+				loadingBar: {
+					position: "top",
+					size: "3px",
+					color: "secondary",
+				},
+			},
 
-			// iconSet: 'material-icons', // Quasar icon set
-			// lang: 'en-US', // Quasar language pack
+			iconSet: 'fontawesome-v6-pro',
+			lang: 'en-US', // Quasar language pack
 
 			// For special cases outside of where the auto-import strategy can have an impact
 			// (like functional components as one of the examples),
@@ -113,7 +122,7 @@ module.exports = configure(function ( /* ctx */ ) {
 			// directives: [],
 
 			// Quasar plugins
-			plugins: []
+			plugins: ['LoadingBar']
 		},
 
 		// animations: 'all', // --- includes all animations
