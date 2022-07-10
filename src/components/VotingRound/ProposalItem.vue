@@ -144,7 +144,7 @@
 					flat
 					dense
 					icon="fa-brands fa-github"
-					label="read on GitHub"
+					label="read proposal"
 					@click="github(proposal.htmlUrl)"
 				/>
 				<Favorite :proposal="proposal" />

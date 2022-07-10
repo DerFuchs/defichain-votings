@@ -8,23 +8,38 @@
 				@click="$router.go(-1)"
 			/>
 			<q-breadcrumbs-el
-				:label="proposals.proposalCode(proposal)"
+				:label="
+					proposals.proposalCode(proposal) +
+					' (#' +
+					proposal.number +
+					' on GitHub)'
+				"
 				icon="fa-light fa-magnifying-glass-chart"
 			/>
 		</q-breadcrumbs>
+
 		<div
 			class="
 				container
 				full-width
 				row
 				justify-left
-				q-col-gutter-md q-mt-none q-pr-md
-				items-stretch
+				q-col-gutter-md q-mt-none q-pr-md q-mb-xl q-pb-xl
 			"
 		>
+			<div class="col-12">
+				<div v-if="proposal?.dfiAmount" class="text-grey">
+					$DFI {{ proposal?.dfiAmount.toLocaleString() }}
+				</div>
+				<div v-else>&nbsp;</div>
+				<div class="text-h6 q-mt-sm q-mb-xs ellipsis-3-lines" :class="{}">
+					{{ proposals.proposalTitle(proposal) }}
+				</div>
+			</div>
+
 			<VotingHistory :proposal="proposal" />
 
-			<!-- <VotingList :proposal="proposal" /> -->
+			<VotingList v-if="false" :proposal="proposal" />
 		</div>
 	</q-page>
 </template>
@@ -44,7 +59,7 @@ export default defineComponent({
 	name: "ProposalDetails",
 	components: {
 		VotingHistory,
-		//VotingList,
+		VotingList,
 	},
 	setup() {
 		const $q = useQuasar();
@@ -61,7 +76,6 @@ export default defineComponent({
 			proposals: proposals,
 			proposal: proposal,
 			proposalVotingHistory: proposals.proposalVotingHistory(proposal),
-			votings: proposals.allVotings(proposal),
 		};
 	},
 });

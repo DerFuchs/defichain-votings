@@ -2,7 +2,6 @@
 	<q-layout view="hHh lpR fff">
 		<q-header>
 			<q-toolbar>
-				<!--
 				<q-btn
 					flat
 					dense
@@ -11,32 +10,12 @@
 					aria-label="Menu"
 					@click="toggleLeftDrawer"
 				/>
-				-->
-
 				<q-toolbar-title> DeFiChain Votings </q-toolbar-title>
-
 				<ProposalFilter />
 			</q-toolbar>
 		</q-header>
-		<!--
-		<q-drawer
-			v-model="leftDrawerOpen"
-			side="left"
-			overlay
-			behavior="mobile"
-			bordered
-		>
-			<q-list>
-				<q-item-label header> Essential Links </q-item-label>
 
-				<EssentialLink
-					v-for="link in essentialLinks"
-					:key="link.title"
-					v-bind="link"
-				/>
-			</q-list>
-		</q-drawer>
-		-->
+		<LeftDrawer v-model="leftDrawerOpen" />
 
 		<q-page-container>
 			<router-view />
@@ -80,7 +59,7 @@ import { useQuasar } from "quasar";
 import { useUserStore } from "stores/user";
 import { useProposalStore } from "stores/proposals";
 
-//import EssentialLink from "components/EssentialLink.vue";
+import LeftDrawer from "components/Layout/LeftDrawer.vue";
 import ProposalFilter from "components/VotingRound/Filter.vue";
 
 const linksList = [
@@ -96,7 +75,7 @@ export default defineComponent({
 	name: "MainLayout",
 
 	components: {
-		//EssentialLink,
+		LeftDrawer,
 		ProposalFilter,
 	},
 

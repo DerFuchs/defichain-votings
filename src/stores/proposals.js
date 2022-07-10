@@ -51,6 +51,26 @@ export const useProposalStore = defineStore('proposals', {
 			return Object.values(state.historicProposals).pop()
 		},
 
+		votingRounds: (state) => {
+			const roundCodes = Object.keys(state.historicProposals)
+			const rounds = []
+			roundCodes.forEach(roundCode => {
+				let round = {}
+				round.code = roundCode
+				round.year = 2000 + parseInt(roundCode.substring(0, 2))
+				round.month = parseInt(roundCode.substring(2))
+				round.moment = moment(round.year + "-" + roundCode.substring(2) + "-01")
+				rounds.push(round)
+			})
+			return rounds.reverse()
+		},
+
+		votingRound: (state) => {
+			return (roundCode) => {
+				return state.historicProposals[roundCode + '']
+			}
+		},
+
 		proposal: (state) => {
 			return (proposalNumber) => {
 				for (const [votingRound, proposals] of Object.entries(state.historicProposals)) {
@@ -104,17 +124,22 @@ export const useProposalStore = defineStore('proposals', {
 			}
 		},
 
-		allVotings: () => {
+		allVotes: () => {
 			return (proposal) => {
+				if (!proposal.voteDetails) {
+					return []
+				}
 				return proposal.voteDetails.yes.concat(proposal.voteDetails.no, proposal.voteDetails.neutral)
 			}
 		},
 
 		proposalVotingHistory: () => {
 			return (proposal) => {
-				let history = {}
-
 				let collection = []
+
+				if (!proposal.voteDetails) {
+					return collection
+				}
 
 				let overall = {
 					name: 'total votes',
@@ -186,12 +211,19 @@ export const useProposalStore = defineStore('proposals', {
 						})
 				})
 
-				this.api
+				await this.api
 					.get(votingRounds[0])
 					.then((result) => {
 						this.historicProposals[votingRounds[0]] = result.data
 						console.log("[DEBUG] re-fetched data for latest voting round: " + votingRounds[0])
 					})
+
+				this.historicProposals = Object.keys(this.historicProposals)
+					.sort()
+					.reduce((accumulator, key) => {
+						accumulator[key] = this.historicProposals[key]
+						return accumulator
+					}, {})
 
 			} catch (error) {
 				console.log(error);

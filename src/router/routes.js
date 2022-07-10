@@ -4,7 +4,8 @@ const routes = [{
 		children: [{
 			path: '',
 			name: 'dashboard',
-			component: () => import('src/pages/CurrentVotingRound.vue')
+			//component: () => import('src/pages/CurrentVotingRound.vue')
+			component: () => import('src/pages/VotingRound.vue')
 		}]
 	},
 	{
@@ -14,6 +15,15 @@ const routes = [{
 			path: '',
 			name: 'proposal',
 			component: () => import('src/pages/ProposalDetails.vue')
+		}]
+	},
+	{
+		path: '/round/:roundCode',
+		component: () => import('layouts/MainLayout.vue'),
+		children: [{
+			path: '',
+			name: 'round',
+			component: () => import('src/pages/VotingRound.vue')
 		}]
 	},
 

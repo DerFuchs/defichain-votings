@@ -4,7 +4,7 @@
 			<q-card-section>
 				<div class="text-h6">Votes history</div>
 			</q-card-section>
-			<q-card-section>
+			<q-card-section v-if="proposalVotingHistory.length > 0">
 				<column-chart
 					:data="proposalVotingHistory"
 					:points="false"
@@ -20,6 +20,7 @@
 					style="height: 200px"
 				/>
 			</q-card-section>
+			<q-card-section v-else>No data available :(</q-card-section>
 		</q-card>
 	</div>
 </template>
