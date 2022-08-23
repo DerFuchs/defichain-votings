@@ -22,14 +22,14 @@
 		</q-page-container>
 
 		<q-footer reveal>
-			<q-toolbar>
-				<q-toolbar-title class="text-caption q-mt-xs" style="min-height: 30px">
+			<q-toolbar style="min-height: 35px">
+				<q-toolbar-title class="text-caption">
 					<div>
 						Powered by
 						<a href="https://dfx.swiss/app?code=001-113" target="_blank">
-							<q-avatar size="25px">
+							<q-avatar size="sm" style="background-color: #072440">
 								<img
-									src="https://dfx.swiss/images/Logo_DFX/png/DFX_600px.png"
+									src="https://dfx.swiss/wp-content/uploads/2022/07/Frame-1.svg"
 								/>
 							</q-avatar>
 						</a>

@@ -39,7 +39,8 @@ export const useProposalStore = defineStore('proposals', {
 				keypath: 'totalVotes.no',
 				title: 'No Votes',
 			},
-		]
+		],
+		currentlyRunningCode: 'latest',
 	}),
 	persist: {
 		paths: [
@@ -57,9 +58,11 @@ export const useProposalStore = defineStore('proposals', {
 			roundCodes.forEach(roundCode => {
 				let round = {}
 				round.code = roundCode
-				round.year = 2000 + parseInt(roundCode.substring(0, 2))
-				round.month = parseInt(roundCode.substring(2))
-				round.moment = moment(round.year + "-" + roundCode.substring(2) + "-01")
+				if (roundCode != state.currentlyRunningCode) {
+					round.year = 2000 + parseInt(roundCode.substring(0, 2))
+					round.month = parseInt(roundCode.substring(2))
+					round.moment = moment(round.year + "-" + roundCode.substring(2) + "-01")
+				}
 				rounds.push(round)
 			})
 			return rounds.reverse()
@@ -119,6 +122,15 @@ export const useProposalStore = defineStore('proposals', {
 						b = keypath(sort.type, b) || 0
 						return (sort.direction == 'asc') ? a > b : a < b
 					})
+				}
+				return proposals
+			}
+		},
+
+		searchProposals: (state) => {
+			return (proposals = false) => {
+				if (!proposals) {
+					proposals = this.filteredProposals()
 				}
 				return proposals
 			}
@@ -212,9 +224,10 @@ export const useProposalStore = defineStore('proposals', {
 				})
 
 				await this.api
-					.get(votingRounds[0])
+					.get('latest')
 					.then((result) => {
-						this.historicProposals[votingRounds[0]] = result.data
+						//this.historicProposals[2208] = result.data
+						this.historicProposals[this.currentlyRunningCode] = result.data
 						console.log("[DEBUG] re-fetched data for latest voting round: " + votingRounds[0])
 					})
 
@@ -225,7 +238,8 @@ export const useProposalStore = defineStore('proposals', {
 						return accumulator
 					}, {})
 
-			} catch (error) {
+			}
+ catch (error) {
 				console.log(error);
 			}
 		}

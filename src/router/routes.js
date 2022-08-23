@@ -1,13 +1,16 @@
-const routes = [{
+const routes = [
+	/*
+	{
 		path: '/',
 		component: () => import('layouts/MainLayout.vue'),
 		children: [{
 			path: '',
-			name: 'dashboard',
-			//component: () => import('src/pages/CurrentVotingRound.vue')
+			name: 'latestPropoal',
 			component: () => import('src/pages/VotingRound.vue')
 		}]
 	},
+	*/
+	{ path: '/', redirect: '/round/latest' },
 	{
 		path: '/proposal/:proposalNumber',
 		component: () => import('layouts/MainLayout.vue'),

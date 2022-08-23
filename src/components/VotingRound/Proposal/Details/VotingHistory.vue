@@ -6,6 +6,7 @@
 			</q-card-section>
 			<q-card-section v-if="proposalVotingHistory.length > 0">
 				<column-chart
+					height="800px"
 					:data="proposalVotingHistory"
 					:points="false"
 					:colors="[

@@ -11,7 +11,10 @@
 					params: { roundCode: round.code },
 				}"
 			>
-				<span>{{ round.moment.format("MMMM YYYY") }}</span>
+				<span v-if="!isNaN(round.code)">{{
+					round.moment.format("MMMM YYYY")
+				}}</span>
+				<span v-else>Currently Running</span>
 				<span v-if="index == 0" style="display: none">&nbsp;(Current)</span>
 			</q-item>
 		</q-list>
@@ -19,7 +22,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import { useProposalStore } from "stores/proposals";
 
 export default defineComponent({
@@ -28,7 +31,7 @@ export default defineComponent({
 		const proposals = useProposalStore();
 
 		return {
-			votingRounds: proposals.votingRounds,
+			votingRounds: computed(() => proposals.votingRounds),
 		};
 	},
 });

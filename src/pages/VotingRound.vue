@@ -1,5 +1,5 @@
 <template>
-	<q-page>
+	<q-page v-if="proposals !== undefined">
 		<div
 			v-if="!compact"
 			class="
