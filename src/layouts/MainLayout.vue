@@ -11,11 +11,12 @@
 					@click="toggleLeftDrawer"
 				/>
 				<q-toolbar-title> DeFiChain Votings </q-toolbar-title>
-				<ProposalFilter />
+				<fetch-proposals />
+				<proposal-filter class="q-ml-md" />
 			</q-toolbar>
 		</q-header>
 
-		<LeftDrawer v-model="leftDrawerOpen" />
+		<left-drawer v-model="leftDrawerOpen" />
 
 		<q-page-container>
 			<router-view />
@@ -61,6 +62,7 @@ import { useProposalStore } from "stores/proposals";
 
 import LeftDrawer from "components/Layout/LeftDrawer.vue";
 import ProposalFilter from "components/VotingRound/Filter.vue";
+import FetchProposals from "components/FetchProposals.vue";
 
 const linksList = [
 	{
@@ -77,6 +79,7 @@ export default defineComponent({
 	components: {
 		LeftDrawer,
 		ProposalFilter,
+		FetchProposals,
 	},
 
 	setup() {
