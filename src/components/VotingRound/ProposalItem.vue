@@ -216,7 +216,7 @@ export default defineComponent({
 
 <style>
 .vote-heading {
-	min-height: 10em;
+	min-height: 11em;
 }
 .vote-heading-compact {
 	min-height: 8em;
