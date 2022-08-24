@@ -24,8 +24,7 @@
 							{{ proposals[0].totalVotes.possible.toLocaleString() }}
 						</span>
 						masternodes eligable to vote on
-						<span class="text-h6">{{ proposals.length }}</span> proposals,
-						ending
+						<span class="text-h6">{{ proposalsCount }}</span> proposals, ending
 						<span class="text-h6">{{
 							moment(proposals[0].endDate).fromNow()
 						}}</span>
@@ -105,7 +104,7 @@ import moment from "moment";
 import ProposalItem from "components/VotingRound/ProposalItem.vue";
 
 export default defineComponent({
-	name: "CurrentVotingRound",
+	name: "VotingRound",
 	components: {
 		ProposalItem,
 	},
@@ -119,6 +118,7 @@ export default defineComponent({
 			moment: (date) => moment(date),
 			dark: toRef($q.dark, "isActive"),
 			compact: toRef(user.settings, "compactView"),
+			proposalsCount: computed(() => proposals.latestProposals.length),
 			proposals: computed(() =>
 				proposals.filteredProposals(
 					user.filters,
