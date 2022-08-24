@@ -136,13 +136,11 @@ export const useProposalStore = defineStore('proposals', {
 			}
 		},
 
-		allVotes: () => {
-			return (proposal) => {
-				if (!proposal.voteDetails) {
-					return []
-				}
-				return proposal.voteDetails.yes.concat(proposal.voteDetails.no, proposal.voteDetails.neutral)
+		allVotes: () => (proposal) => {
+			if (!proposal.voteDetails) {
+				return []
 			}
+			return proposal.voteDetails.yes.concat(proposal.voteDetails.no, proposal.voteDetails.neutral)
 		},
 
 		proposalVotingHistory: () => {
@@ -213,22 +211,30 @@ export const useProposalStore = defineStore('proposals', {
 						votingRounds = result.data
 						console.log("[DEBUG] found " + votingRounds.length + " voting rounds including current")
 					})
-				votingRounds.filter(code => !Object.keys(this.historicProposals).includes(code)).forEach((roundCode) => {
-					console.log("[DEBUG] found new voting round: " + roundCode)
+				// await Promise.all(votingRounds.filter(code => !Object.keys(this.historicProposals).includes(code)).forEach((roundCode) => {
+				// 	console.log("[DEBUG] found new voting round: " + roundCode)
+				// 	this.api
+				// 		.get(roundCode)
+				// 		.then((result) => {
+				// 			this.historicProposals[roundCode] = result.data
+				// 			console.log("[DEBUG] fetched data for new voting round: " + roundCode)
+				// 		})
+				// }))
+				await Promise.all(votingRounds.map((roundCode) => {
 					this.api
 						.get(roundCode)
 						.then((result) => {
 							this.historicProposals[roundCode] = result.data
-							console.log("[DEBUG] fetched data for new voting round: " + roundCode)
+							console.log("[DEBUG] fetched data for voting round: " + roundCode)
 						})
-				})
+				}))
 
+				// put latest voting round in front of all historic ones
 				await this.api
-					.get('latest')
+					.get(this.currentlyRunningCode)
 					.then((result) => {
-						//this.historicProposals[2208] = result.data
 						this.historicProposals[this.currentlyRunningCode] = result.data
-						console.log("[DEBUG] re-fetched data for latest voting round: " + votingRounds[0])
+						console.log("[DEBUG] re-fetched data for latest voting round")
 					})
 
 				this.historicProposals = Object.keys(this.historicProposals)
